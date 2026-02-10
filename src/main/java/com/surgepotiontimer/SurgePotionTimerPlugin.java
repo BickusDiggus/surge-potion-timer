@@ -43,7 +43,9 @@ public class SurgePotionTimerPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-
+		infoBox = new SurgePotionInfoBox(client, this, config);
+		infoBox.setImage(itemManager.getImage(ItemID._4DOSESURGE));
+		infoBoxManager.addInfoBox(infoBox);
 	}
 
 	@Override
@@ -68,12 +70,12 @@ public class SurgePotionTimerPlugin extends Plugin
 		final int surgePotionCycles = client.getVarbitValue(VarbitID.SURGE_POTION_TIMER);
 		if (surgePotionCycles > 0)
 		{
+			surgePotioned = true;
 			if (surgePotionCycles != prevSurgePotionCycles)
 			{
 				prevSurgePotionCycles = surgePotionCycles;
 				surgePotionInTicks = surgePotionCycles * 10;
 			}
-			surgePotionAdd();
 
 			final boolean tobActive = client.getVarbitValue(6440) > 1;
 			final boolean tobRoomActive = client.getVarbitValue(6447) > 0;
@@ -84,28 +86,9 @@ public class SurgePotionTimerPlugin extends Plugin
 		}
 		else
 		{
-			surgePotionReset();
+			surgePotioned = false;
+			prevSurgePotionCycles = 0;
 		}
-	}
-
-	void surgePotionAdd()
-	{
-		surgePotioned = true;
-
-		if (infoBox == null)
-		{
-			infoBox = new SurgePotionInfoBox(client, this, config);
-			infoBox.setImage(itemManager.getImage(ItemID._4DOSESURGE));
-			infoBoxManager.addInfoBox(infoBox);
-		}
-	}
-
-	void surgePotionReset()
-	{
-		surgePotioned = false;
-		prevSurgePotionCycles = 0;
-		infoBoxManager.removeInfoBox(infoBox);
-		infoBox = null;
 	}
 
 	public static String to_mmss(int ticks)

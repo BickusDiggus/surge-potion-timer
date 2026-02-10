@@ -52,6 +52,12 @@ public class SurgePotionInfoBox extends InfoBox
 	}
 
 	@Override
+	public boolean render()
+	{
+		return plugin.surgePotioned;
+	}
+
+	@Override
 	public String getTooltip()
 	{
 		return "Surge potion";
