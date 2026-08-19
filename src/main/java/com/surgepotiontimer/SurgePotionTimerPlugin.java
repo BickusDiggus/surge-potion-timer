@@ -77,8 +77,8 @@ public class SurgePotionTimerPlugin extends Plugin
 				surgePotionInTicks = surgePotionCycles * 10;
 			}
 
-			final boolean tobActive = client.getVarbitValue(6440) > 1;
-			final boolean tobRoomActive = client.getVarbitValue(6447) > 0;
+			final boolean tobActive = client.getVarbitValue(VarbitID.TOB_CLIENT_PARTYSTATUS) > 1;
+			final boolean tobRoomActive = client.getVarbitValue(VarbitID.TOB_CLIENT_WAVEPROGRESS_TYPE) > 0;
 			if (!tobActive || tobRoomActive)
 			{
 				--surgePotionInTicks;
